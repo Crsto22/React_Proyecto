@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Facebook, ArrowRight } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { CheckCircle2, Users, Clock, Calendar } from "lucide-react";
-import AutoScroll from "embla-carousel-auto-scroll";
-import useEmblaCarousel from "embla-carousel-react";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import {  Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 const Counter = ({ end, duration, suffix = "" }) => {
   const [count, setCount] = useState(0);
@@ -36,50 +38,44 @@ const Counter = ({ end, duration, suffix = "" }) => {
   );
 };
 
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
-
-const brands = [
-  {
-      id: 1,
-      name: "Masisa",
-      image:
-          "https://tablerosmaqui.com/wp-content/uploads/2024/02/Logos-clientes-tableros-maqui-04.png",
-  },
-  {
-      id: 2,
-      name: "Arauco",
-      image:
-          "https://tablerosmaqui.com/wp-content/uploads/2024/02/Logos-clientes-tableros-maqui-02.png",
-  },
-  {
-      id: 3,
-      name: "Novopan",
-      image:
-          "https://tablerosmaqui.com/wp-content/uploads/2024/02/Logos-clientes-tableros-maqui-03.png",
-  },
-  {
-      id: 4,
-      name: "LP Chile",
-      image:
-          "https://tablerosmaqui.com/wp-content/uploads/2024/02/Logos-clientes-tableros-maqui-01.png",
-  },
-];
+const position = [-16.41416431755467, -71.50462072792388];
 
 const Nosotros = () => {
 
-  const [emblaRef1] = useEmblaCarousel(
-    {
-        loop: true,
-        dragFree: true,
+
+  useEffect(() => {
+    const map = document.querySelector('.leaflet-container');
+    if (map) {
+      window.dispatchEvent(new Event('resize'));
+    }
+  }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
     },
-    [
-        AutoScroll({
-            playOnInit: true,
-            speed: 1.5,
-            startDelay: 0,
-        }),
-    ]
-  );
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section with Background */}
@@ -238,35 +234,164 @@ const Nosotros = () => {
           </motion.div>
         </div>
       </section>
-      <section className="py-8 md:py-16 -mt-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Marcas <span className="text-yellow-600">Destacadas</span>
-            </h2>
-            <p className="text-gray-600 mt-2">Distribuidores Oficiales</p>
+      <motion.div
+      initial="hidden"
+      whileInView="visible"
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="xl:max-w-7xl lg:max-w-6xl md:max-w-1xl sm:max-w-xl max-w-sm mx-auto mb-10"
+    >
+      <motion.div
+        variants={itemVariants}
+        className="text-center mb-16"
+      >
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Encuéntranos
+        </h1>
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          Estamos ubicados en el corazón de Arequipa, listos para atenderte con la mejor calidad y servicio.
+        </p>
+      </motion.div>
+
+      <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="bg-white rounded-2xl shadow-2xl overflow-hidden"
+        >
+          <div className="bg-gradient-to-r from-orange-400 to-orange-500 p-6">
+            <h2 className="text-2xl font-bold text-white">Información de Contacto</h2>
           </div>
 
-          <div className="overflow-hidden" ref={emblaRef1}>
-            <div className="flex">
-              {[...brands, ...brands].map((brand, index) => (
-                <div
-                  key={`${brand.id}-${index}`}
-                  className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.333333%] lg:flex-[0_0_25%] min-w-0 px-2 md:px-4"
+          <div className="p-8 space-y-8">
+            <motion.div
+              whileHover={{ x: 10 }}
+              className="flex items-start space-x-4 group"
+            >
+              <div className="bg-orange-50 p-3 rounded-lg group-hover:bg-orange-100 transition-colors">
+                <MapPin className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Dirección</h3>
+                <p className="text-gray-600">Av. Pizarro 123, Arequipa, Perú</p>
+                <a
+                  href={`https://www.google.com/maps?q=${position[0]},${position[1]}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-orange-600 hover:text-orange-700 mt-2 text-sm"
                 >
-                  <div className="bg-white rounded-lg shadow-md p-4 md:p-6 h-24 md:h-32 flex items-center justify-center hover:scale-105 transition-transform duration-300">
-                    <img
-                      src={brand.image}
-                      alt={`${brand.name} logo`}
-                      className="max-w-full h-auto max-h-16 md:max-h-20 object-contain grayscale hover:grayscale-0 transition-all duration-300"
-                    />
+                  Ver en Google Maps
+                  <ExternalLink className="w-4 h-4 ml-1" />
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ x: 10 }}
+              className="flex items-start space-x-4 group"
+            >
+              <div className="bg-orange-50 p-3 rounded-lg group-hover:bg-orange-100 transition-colors">
+                <Phone className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Teléfono</h3>
+                <a
+                  href="tel:+51954123456"
+                  className="text-orange-600 hover:text-orange-600 transition-colors"
+                >
+                  +51 954 123 456
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ x: 10 }}
+              className="flex items-start space-x-4 group"
+            >
+              <div className="bg-orange-50 p-3 rounded-lg group-hover:bg-orange-100 transition-colors">
+                <Mail className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Correo</h3>
+                <a
+                  href="mailto:contacto@tablerosmaqui.com"
+                  className="text-orange-600 hover:text-orange-600 transition-colors"
+                >
+                  contacto@tablerosmaqui.com
+                </a>
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ x: 10 }}
+              className="flex items-start space-x-4 group"
+            >
+              <div className="bg-orange-50 p-3 rounded-lg group-hover:bg-orange-100 transition-colors">
+                <Clock className="w-6 h-6 text-orange-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">Horario de Atención</h3>
+                <div className="space-y-2 mt-2">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Lunes a Viernes</span>
+                    <span className="font-medium">8:00 AM - 6:00 PM</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Sábados</span>
+                    <span className="font-medium">8:00 AM - 1:00 PM</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Domingos</span>
+                    <span className="font-medium text-red-500">Cerrado</span>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="h-[600px] rounded-2xl overflow-hidden shadow-2xl hidden md:block"
+        >
+          <MapContainer
+            center={position}
+            zoom={16}
+            style={{ height: "100%", width: "100%" }}
+            className="z-0"
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={position}>
+              <Popup className="rounded-lg">
+                <div className="p-2">
+                  <h3 className="font-bold text-gray-900 mb-1">Tableros Maqui</h3>
+                  <p className="text-gray-600 text-sm">Av. Pizarro 123, Arequipa, Perú</p>
+                  <div className="mt-3 pt-3 border-t border-gray-100">
+                    <a
+                      href={`https://www.google.com/maps?q=${position[0]},${position[1]}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700"
+                    >
+                      Cómo llegar
+                      <ExternalLink className="w-4 h-4 ml-1" />
+                    </a>
+                  </div>
+                </div>
+              </Popup>
+            </Marker>
+          </MapContainer>
+        </motion.div>
+      </div>
+    </motion.div>
     </div>
   );
 };

@@ -12,6 +12,7 @@ import {
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { Link } from 'react-router-dom';
 
 const brands = [
     {
@@ -100,6 +101,7 @@ const ServiceCard = ({ imageSrc, title, description }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn bg-orange-600 hover:bg-yellow-600 text-white  btn-wide"
+                
             >
                 Ver más
             </motion.button>
@@ -120,6 +122,7 @@ const Home = () => {
             title: "Venta de Melamina",
             description:
                 "Te ofrecemos variedad, colores y diferentes marcas de melamina.",
+                path: '/servicios',
         },
         {
             imageSrc:
@@ -127,6 +130,7 @@ const Home = () => {
             title: "Cortes Especiales",
             description:
                 "Realizamos diferentes tipos de cortes según tu proyecto o gusto del cliente.",
+                path: '/servicios',
         },
         {
             imageSrc:
@@ -134,6 +138,7 @@ const Home = () => {
             title: "Enchapados Curvos",
             description:
                 "Todo lo que necesitas para tus proyectos con enchapados curvos con nosotros.",
+                path: '/servicios',
         },
     ];
 
@@ -286,9 +291,11 @@ const Home = () => {
                                         vamos mejorando para ofrecerte un servicio y productos de
                                         calidad.
                                     </p>
+                                    <Link to="/nosotros">
                                     <button className="btn bg-orange-500 hover:bg-orange-800  text-white gap-2">
                                         Ver más <ArrowRight className="w-4 h-4" />
                                     </button>
+                                    </Link>
                                 </motion.div>
                                 <motion.div
                                     initial={{ x: 50 }}
@@ -360,7 +367,7 @@ const Home = () => {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false }} // Animación cada vez que el título se vuelve visible
+                            viewport={{ once: false }} 
                             transition={{ duration: 0.5 }}
                             className="text-center mb-12"
                         >
@@ -375,22 +382,24 @@ const Home = () => {
                         </motion.div>
 
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {services.map((service, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false }}
-                                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                                >
-                                    <ServiceCard
-                                        imageSrc={service.imageSrc}
-                                        title={service.title}
-                                        description={service.description}
-                                    />
-                                </motion.div>
-                            ))}
-                        </div>
+    {services.map((service, index) => (
+        <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+        >
+            <Link to={service.path}>
+                <ServiceCard
+                    imageSrc={service.imageSrc}
+                    title={service.title}
+                    description={service.description}
+                />
+            </Link>
+        </motion.div>
+    ))}
+</div>
                     </div>
                 </section>
                 <section className="py-8 md:py-16 bg-gray-50 -mt-16">
