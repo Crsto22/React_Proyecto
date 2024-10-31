@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LoadingScreen from "./components/LoadingScreen";
@@ -8,6 +8,16 @@ import Nosotros from "./pages/Nosotros";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import PromoModal from "./components/PromoModal"; 
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -37,6 +47,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop /> 
       <Navbar />
       <PromoModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} /> 
       <Routes>
