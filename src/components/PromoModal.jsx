@@ -3,9 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
 const images = [
-  "https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/425426809_122096030270209429_2863954408808311620_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFcQdinG-OsA7IZZKzv6u1IqLp8iE8V6uuounyITxXq60paZTG1k8PiR_eN2Zgy1kgLPid3vtjaW-gUxkx5FmjB&_nc_ohc=BL7-ZLcWMfIQ7kNvgG4Fw0I&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=Aa2XOxaOckkkOEEwJ1Y_ItE&oh=00_AYBdweoe-UWkw7vmPDHJ00U4VvUKR69VOa5jlifC6XG0cA&oe=672894C0",
-  "https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/429794898_122119081166209429_4350728774061128670_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH0PX8jiPj-B_7SedO508JzylA2RZRiwW7KUDZFlGLBbhhuCpApzz5Mv5mHBoFJ4L6lzr0l1s8vavD9P46KhdWS&_nc_ohc=4ka62g8E7dAQ7kNvgHQt_Sm&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=A2cWRuRsrjPyvzdkGLpEuHB&oh=00_AYCc-oEEhyF3CBHz6RJy12DgQgEBdBMjT3Rkh26_7p9TqQ&oe=67289838",
-  "https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/435075687_122131597568209429_1689610710073477991_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=833d8c&_nc_eui2=AeFfZ9gTqZVcXMeisxmXHNBHuLg1yzUni0e4uDXLNSeLR8YBwbNdY2k1G4sjbNN6dJK-xfczOADTe3UdfR2Ln7ep&_nc_ohc=IqppD97VRz8Q7kNvgHLdxaH&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=Ag87FMP_XHRJhDnS6aSuTg6&oh=00_AYCr0G5Ywi_fiogyslFfrrUwECt6kv7ZcYKpywTBl6QUzw&oe=6728899D"
+  "https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/474876278_122209486940209429_7469100596182183209_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=833d8c&_nc_ohc=PaqpZ8YJiLMQ7kNvgGc1dZ6&_nc_oc=AdhBZz2QG6H0Pv2F0aP1PdutUxnsx5DrN7ANpiURV3li_01vPval3EO3BPka3GP6xEc&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=ALuRZ7ij3Z7hF6yJlW1RwEC&oh=00_AYBpRJbUYZx8gsyxUWntXekUsbB-UzTdLiq_NQYiHXH_pA&oe=67B537D1",
+"https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/472100349_122204873660209429_1727233904450591906_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=60v2JM9E7hwQ7kNvgGhCpAp&_nc_oc=Adh3DF8Cd9MapgPiJCRAcpGKBIGJrbR3P4IDtJ-nR49Wq_6soKa9ODATgo7GhVlg8kY&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=A39tFV_aI2Sr2is1_acRp_4&oh=00_AYCItp2NmvGbg6Pla2tMifm_dbmLOdwF36cNCuYq_YJU4w&oe=67B52A84",
+  "https://scontent-lim1-1.xx.fbcdn.net/v/t39.30808-6/475661299_122211069740209429_3404430855436628454_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=833d8c&_nc_ohc=TnGTvorCbR4Q7kNvgETh0-O&_nc_oc=Adg_g3-QcQwvEqNKKf1y2kvydrE3zpl3_fa2jrf4sSa9KAvaleyoJAIZ10U0u48w_fo&_nc_zt=23&_nc_ht=scontent-lim1-1.xx&_nc_gid=Av3l2WM1zX0FJd0dXS2Jllj&oh=00_AYB-IXZokLDnwwQm7VC9dQy5NU76XEm2U54M-Xk3a2daNw&oe=67B5220A"
 ];
 
 const getRandomImage = () => {
